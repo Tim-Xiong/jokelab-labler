@@ -7,7 +7,8 @@ This project is a joke labeling application designed to collect and analyze user
 
 ## Description of Data
 
-The dataset consists of jokes and their associated labels, stored in CSV files:
+The dataset is uploaded to Huggingface, check it out [here](https://huggingface.co/datasets/Timxjl/short-jokes-punchline).
+It consists of jokes and their associated labels, stored in CSV files:
 
 - **`joke.csv`**: Contains jokes with the following columns:
   - **`id`**: Unique identifier for the joke.
