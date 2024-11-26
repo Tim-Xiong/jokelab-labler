@@ -5,10 +5,10 @@ from sklearn.feature_extraction.text import CountVectorizer
 import matplotlib.pyplot as plt
 
 # Load the CSV files
-joke_df = pd.read_csv('/mnt/data/joke.csv')
-label_df = pd.read_csv('/mnt/data/label.csv')
-label_segment_df = pd.read_csv('/mnt/data/label_segment.csv')
-visitor_df = pd.read_csv('/mnt/data/visitor.csv')
+joke_df = pd.read_csv('csv_exports/joke.csv')
+label_df = pd.read_csv('csv_exports/label.csv')
+label_segment_df = pd.read_csv('csv_exports/label_segment.csv')
+visitor_df = pd.read_csv('csv_exports/visitor.csv')
 
 # Prepare a professional EDA report script
 
