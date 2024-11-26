@@ -13,6 +13,12 @@ db.init_app(app)
 
 @app.before_request
 def check_visitor():
+    """
+    Check if the visitor has a unique visitor ID in the session.
+    If the 'visitor_id' is not present in the session, generate a new unique visitor ID,
+    create a new Visitor object with this ID, add it to the database session, and commit the session.
+    This function ensures that each visitor has a unique identifier for tracking purposes.
+    """
     if 'visitor_id' not in session:
         session['visitor_id'] = str(uuid.uuid4())
         visitor = Visitor(id=session['visitor_id'])
@@ -21,10 +27,24 @@ def check_visitor():
 
 @app.route('/')
 def index():
+    """
+    Render the index.html template.
+    Returns:
+        A rendered HTML template for the index page.
+    """
     return render_template('index.html')
 
 @app.route('/get_joke')
 def get_joke():
+    """
+    Retrieve a joke that has the fewest labels and has not been labeled by the current visitor.
+    This function queries the database to find a joke that has the fewest labels associated with it.
+    It ensures that the joke has not been labeled by the current visitor (identified by session['visitor_id']).
+    If no such joke is found, it returns a JSON response indicating that there are no more jokes to label.
+    Returns:
+        Response: A JSON response containing the joke's id and text if a joke is found.
+                  If no joke is found, returns a JSON response with a message and a 404 status code.
+    """
     # Get joke with fewest labels
     subquery = db.session.query(
         Label.joke_id,
@@ -49,6 +69,14 @@ def get_joke():
 
 @app.route('/submit_label', methods=['POST'])
 def submit_label():
+    """
+    Handles the submission of a joke label.
+    This function processes a JSON request containing a joke ID, segments, and a no_punchline flag.
+    It validates the input, creates a new label, and optionally adds segments to the label.
+    The label and segments are then saved to the database.
+    Returns:
+        Response: A JSON response indicating success or failure of the label submission.
+    """
     data = request.json
     joke_id = data.get('joke_id')
     segments = data.get('segments', [])

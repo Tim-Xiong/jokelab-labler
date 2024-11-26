@@ -5,6 +5,18 @@ from app import app, db
 from models import Joke
 
 def setup_database(num_jokes):
+    """
+    Sets up the database by creating tables and populating it with a specified number of jokes from a CSV file.
+    Args:
+        num_jokes (int): The number of jokes to add to the database.
+    Raises:
+        FileNotFoundError: If the CSV file containing jokes is not found.
+        ValueError: If the CSV file does not contain the required 'Joke' column.
+    Notes:
+        - The function reads jokes from a CSV file named 'shortjokes.csv'.
+        - If the number of jokes requested exceeds the number available in the CSV file, it will add all available jokes.
+        - The jokes are randomly selected from the CSV file.
+    """
     with app.app_context():
         # Create all tables
         db.create_all()
